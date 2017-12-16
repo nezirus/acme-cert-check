@@ -12,7 +12,7 @@ from asyncio import gather, get_event_loop, open_connection
 import functools
 
 
-default_conf = Namespace(tasks=1, validity=30, domains=[])
+default_conf = Namespace(tasks=1, validity=30, domains=None)
 epilog = 'Note: You can provide a list of domains (one per line) on STDIN'
 
 
@@ -23,7 +23,7 @@ def cli_parser(conf):
                         metavar='HOSTNAME:PORT:ADDRESS',
                         help='Domain name (port and address are optional)',
                         action='append',
-                        default=conf.domains)
+                        default=[])
     parser.add_argument('-t', '--tasks',
                         help='how many tasks to run in parallel',
                         default=conf.tasks, type=int)
@@ -33,8 +33,6 @@ def cli_parser(conf):
                         default=conf.validity, type=int)
     parser.add_argument('-v', '--verbose', help='show check results',
                         action='store_true', default=False)
-
-    conf = parser.parse_args()
 
     return parser, parser.parse_args()
 
