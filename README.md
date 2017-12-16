@@ -1,10 +1,14 @@
 # acme-cert-check
-TLS certificate expiration checker for hosts with modern TLS certs
+TLS certificate expiration checker for hosts with modern TLS setups.
 
 Intended usage is for ACME compatible CAs 
 (e.g. [Let's Encrypt](https://letsencrypt.org)),
 where certificates are short lived (90 days), and they should automatically
 renew when they are about to expire (usually 30 days before expiry).
+
+The script requires that you have Python 3.5 or later installed, and uses Python
+[defaults](https://docs.python.org/3/library/ssl.html#ssl.create_default_context)
+for TLS connections (i.e. no SSLv2 or SSLv3, only TLS is supported, etc)
 
 ----------
 
