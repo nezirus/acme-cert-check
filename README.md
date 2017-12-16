@@ -10,6 +10,10 @@ The script requires that you have Python 3.5 or later installed, and uses Python
 [defaults](https://docs.python.org/3/library/ssl.html#ssl.create_default_context)
 for TLS connections (i.e. no SSLv2 or SSLv3, only TLS is supported, etc)
 
+The script is only usable on Linux or Unix like operating systems, and does not
+write to standard output, unless an error is encountered. You could use cron to
+run it and to send email in case of errors.
+
 ## Usage
 
 ```
