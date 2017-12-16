@@ -83,6 +83,9 @@ async def check_domain(conf, loop, d):
     except ssl.SSLError as e:
         print('{}: SSL error: {}'.format(hostname, e), file=sys.stderr)
         return
+    except OSError as e:
+        print('{}: Error: {}'.format(hostname, e), file=sys.stderr)
+        return
 
     cert = writer.get_extra_info("peercert")
     writer.close()
