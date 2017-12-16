@@ -59,3 +59,32 @@ acme-cert-check.py -d example.net:8443:127.0.0.1
 \- v | --verbose
 
   Print domain name and validity during checks.
+
+## Design
+
+We've tried hard to make script as simple as possible, here are some design
+decisions:
+
+- The script doesn't write anything on standard output during normal operation
+  and returns 0 on success.
+
+- There is no provision to send email, use standard unix tools or cron for
+  alerting.
+
+- There are no provisions to directly configure TLS parameters (crypto is very
+  complicated topic). Instead, we rely on Python3 defaults. The script uses
+  CA bundle provided by your operating system (e.g. Mozilla/NSS CA certs),
+  which means it should behave like a regular web browser when trusting
+  certificates.
+
+- Checking large number of domains can take a long time, mostly taken by
+  networking stuff (DNS queries, TLS protocol handshake) and CPU intensive
+  crypto. To speed up the process, you can use `-t|--tasks` parameter.
+
+  For example, on my computer it takes 11 seconds to check 32 domains with
+  cold DNS cache (6 seconds on second try), and 0.9 seconds with `-t 32`
+  (0.5 seconds with warm DNS cache). Depending on your situation (number
+  of domains and available CPU resources), you may need to experiment with
+  this parameter to achieve best results.
+
+  This feature requires Python 3.5 or later.
