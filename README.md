@@ -34,6 +34,16 @@ acme-cert-check.py -d example.net::127.0.0.1
 
 # domain behind a proxy, on custom port
 acme-cert-check.py -d example.net:8443:127.0.0.1
+
+# domain expires in less than 30 days (default validity)
+acme-cert-check.py -d example.net
+example.net: Certificate is valid for 29 days
+
+# domain name does not exist in DNS
+acme-cert-check.py -d example.net
+example.net: Error: [Errno -2] Name or service not known
+
+
 ```
 
 ## Parameters
@@ -88,3 +98,8 @@ decisions:
   this parameter to achieve best results.
 
   This feature requires Python 3.5 or later.
+
+- It allows checking TLS certificates for a domain on a different IP from the
+  DNS data. For example, you could have your domain protected by CloudFlare or
+  similar service, but still want to configure proper TLS certs for your origin
+  server.
