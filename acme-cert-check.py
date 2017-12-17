@@ -87,7 +87,7 @@ async def check_domain(conf, loop, d):
         print('{}: Error: {}'.format(hostname, e), file=sys.stderr)
         return
 
-    cert = writer.get_extra_info("peercert")
+    cert = writer.get_extra_info('peercert')
     writer.close()
 
     try:
