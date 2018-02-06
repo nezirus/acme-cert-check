@@ -126,7 +126,7 @@ if __name__ == '__main__':
         for line in sys.stdin:
             line_s = line.strip()
             if line_s and not line_s.startswith('#'):
-                conf.domains.append(line.strip())
+                conf.domains.append(line_s)
 
     if conf.domains:
         loop = get_event_loop()
