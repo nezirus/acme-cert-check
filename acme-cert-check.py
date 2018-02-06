@@ -112,7 +112,7 @@ async def check_domain(conf, loop, d):
 
     if conf.verbose:
         t = after - now
-        print('{}: Valid for {} days'.format(hostname, t.days))
+        print('{}: Certificate is valid for {} days'.format(hostname, t.days))
 
 
 def async_exception_handler(loop, context):
