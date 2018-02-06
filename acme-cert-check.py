@@ -83,6 +83,9 @@ async def check_domain(conf, loop, d):
     except ssl.SSLError as e:
         print('{}: SSL error: {}'.format(hostname, e), file=sys.stderr)
         return
+    except ssl.CertificateError as e:
+        print('{}: Certificate error: {}'.format(hostname, e), file=sys.stderr)
+        return
     except OSError as e:
         print('{}: Error: {}'.format(hostname, e), file=sys.stderr)
         return
@@ -112,6 +115,10 @@ async def check_domain(conf, loop, d):
         print('{}: Valid for {} days'.format(hostname, t.days))
 
 
+def async_exception_handler(loop, context):
+    pass
+
+
 if __name__ == '__main__':
     parser, conf = cli_parser(default_conf)
 
@@ -123,6 +130,7 @@ if __name__ == '__main__':
 
     if conf.domains:
         loop = get_event_loop()
+        loop.set_exception_handler(async_exception_handler)
         f = functools.partial(check_domain, conf, loop)
         for d in slice_list(conf.domains, conf.tasks):
             coros = [f(x) for x in d]
